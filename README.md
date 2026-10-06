@@ -1,6 +1,7 @@
-This repository is a basis for the data managing architecture used in our project. 
+validationTraining.py is for 5-fold cross validation that was implemented to select values for k and lamda
 
-main.py has a small demo of how the data is processed, including a reverse PCA transformation. 
+data_split.py has the algorithms for importing the data and performing the train-test and validation set splits
 
-The data preprocessing happens in data_split.py, where data is imported and split into train and test sets, 
-after which they are transformed by calling the pca_transform -function, found in pca.py.
+pca.py has the algorithms for doing the PCA transformation as well as the inverse transformation
+
+training.py has the final training algorithm 
