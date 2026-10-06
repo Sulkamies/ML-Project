@@ -1,21 +1,19 @@
-from data_split import dataImport, trainTestSplit
-from pca import inverse_pca
-from data_visualisation import retainer
+from data_split import dataImport, trainTestSplit, foldSplit
+from validationTraining import gridSearch
+from training import train
+
+# Hyperparameters
+lamda = 0.1
+k = 250
 
 # Import raw (but normalized) data
 X_raw, y = dataImport()
 
-# Performs split into train and test sets and computes the compressed representation in the k-dimensional principal subspace for both
-X_train_compressed, X_test_compressed, y_train, y_test, pca = trainTestSplit(X_raw, y)
+# Performs split into train and test sets 
+X_train_raw, X_test_raw, y_train, y_test = trainTestSplit(X_raw, y)
 
-# Transform the compressed data back to the 784-dimensional feature space
-X_inverse = inverse_pca(X_train_compressed, pca) 
-
-# Visualize a given datapoint that has been transformed to the principal subspace and then transformed back to feature subspace; visualization for information lost in the tansformation
-retainer(X_inverse[0, :], y_train[0])
-retainer(X_inverse[5, :], y_train[5])
-retainer(X_inverse[6, :], y_train[6])
-
+# Train the model using the hyperparameters chosen
+train(X_train_raw, y_train, X_test_raw, y_test, k, lamda)
 
 # For testing
 

@@ -1,5 +1,5 @@
 from sklearn.datasets import fetch_openml
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, StratifiedKFold
 from pca import pca_transformation
 
 k = 200 # number of principal components chosen
@@ -27,9 +27,12 @@ def trainTestSplit(X_raw, y) :
         stratify=y       # ensures equal amounts of each clothing type in both sets
     )
 
-    # Compute the projections of the data to the k-dimensional principal subspace (determined by the training data)
-    X_train_compressed, X_test_compressed, pca = pca_transformation(X_train_raw, X_test_raw, k)
+    return X_train_raw, X_test_raw, y_train, y_test
 
-    return X_train_compressed, X_test_compressed, y_train, y_test, pca
+def foldSplit(X, y) : 
+
+    # Creates a 5-fold split
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    return list(skf.split(X, y))
 
 
